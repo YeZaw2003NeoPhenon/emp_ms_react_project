@@ -1,0 +1,60 @@
+
+* , *::before , *::after{
+    box-sizing:border-box;
+}
+.header-title{
+    letter-spacing: 3px;
+    font-size:35px;
+    margin-left: 50px;
+}
+
+.create_btn{
+    font-weight:bold;
+    font-size:1.1rem;
+    border:none;
+    align-items: center;
+    transition: background-color 0.3s ease-in;
+}
+
+navbar-custom {
+    background-color: #f8f9fa; /* Customize the background color */
+}
+
+
+.navbar-custom {
+    background-color: #343a40; /* Dark background color */
+    padding: 10px 20px; /* Padding for the navbar */
+}
+
+/* Custom styles for the brand name */
+.navbar-brand-custom {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #ffffff; /* White color for the brand name */
+    text-transform: uppercase; /* Uppercase text */
+    margin-right: 30px; /* Margin to separate from the nav links */
+}
+
+/* Custom styles for the navigation links */
+.nav-link {
+    color: #adb5bd; /* Light gray color for the links */
+    margin-right: 15px; /* Spacing between links */
+    font-size: 1rem; /* Font size */
+    text-transform: capitalize; /* Capitalize text */
+    padding: 10px 15px; /* Padding for links */
+    transition: color 0.3s, background-color 0.3s; /* Smooth transition for color changes */
+}
+
+ .nav-link:hover {
+    color: #ffffff; /* White color on hover */
+    background-color: #495057; /* Darker background on hover */
+    text-decoration: none; /* No underline on hover */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Active link styling */
+.nav-link.active {
+    color: #ffffff; /* White color for active link */
+    background-color: #495057; /* Darker background for active link */
+    border-radius: 5px; /* Rounded corners */
+}

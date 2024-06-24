@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "C:\Users\Acer\Desktop\mybatis-3-mapper.dtd">
+  <mapper namespace = "com.example.employeemanagement_system.repository.ManagerRepository">
+  
+    <resultMap type="Manager" id = "ManagerResultMap">
+  	<id column = "id" property = "id"></id>
+  	<result column = "name" property = "name" ></result>
+  	<result column = "department" property = "department"></result>
+  </resultMap>
+  
+  	<select id = "getAllManagers" resultMap = "ManagerResultMap">
+  	  	SELECT id , name , department FROM manager;
+  	</select>
+  	
+  	<insert id = "insertIntoManager" parameterType = "Manager" keyProperty = "id" useGeneratedKeys = "true">
+  		     INSERT INTO manager 
+         	<trim prefix = "(" suffix = ")" suffixOverrides = ",">
+         		<if test="id != null">id,</if>
+            	<if test="name != null">name,</if>
+           		<if test="department != null">department,</if>
+         	</trim>
+         	<trim prefix = "VALUES (" suffix = ")" suffixOverrides = ",">
+        		<if test="id != null">#{id},</if>
+            	<if test="name != null">#{name},</if>
+           		<if test="department != null">#{department},</if> 	
+               </trim>
+  	</insert>
+  	
+  	<select resultMap = "ManagerResultMap" id = "getManagerById" parameterType = "int">
+  		SELECT id , name ,department FROM manager WHERE id = #{id}
+  	</select>
+  	
+  	<delete id = "deleteManager" parameterType = "int">
+  			DELETE FROM manager WHERE id = #{id};
+  	</delete>
+  	
+  	<update id = "updateManager" parameterType = "Manager">
+  	    UPDATE manager 
+  	    <set>
+  	    	<if test = "name != null">name = #{name},</if>
+  	    	<if test = "department != null">department = #{department},</if>
+  	    </set>
+  	    WHERE id = #{id};
+  	</update>
+  	
+
+    <select id="existsById" parameterType="int" resultType="boolean">
+        SELECT EXISTS(SELECT 1 FROM manager WHERE id = #{id})
+    </select>
+  </mapper>

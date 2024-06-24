@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "C:\Users\Acer\Desktop\mybatis-3-mapper.dtd">
+  <mapper namespace = "com.example.employeemanagement_system.repository.EmployeeRepository">
+  
+  <resultMap type="Employee" id = "EmployeeWithManagerResultMap">
+  	<id column = "id" property = "id"></id>
+  	<result column = "name" property = "name" ></result>
+  	<result column = "age" property = "age"></result>
+  	<result column = "role" property = "role"></result>
+    <result column = "manager_id" property = "manager_id"></result>
+    <association property = "manager" javaType = "manager"> 
+            <id property="id" column="m_id" />
+            <result property="name" column="m_name" />
+            <result property="department" column="m_department" />
+    </association>
+  </resultMap>
+  	
+ <select id="getAllEmployeesWithManagers" resultMap="EmployeeWithManagerResultMap">
+    SELECT e.id,e.name , e.age, e.role, e.manager_id ,
+           m.id AS m_id, m.name AS m_name, m.department AS m_department
+    FROM employee e
+    INNER JOIN manager m ON e.manager_id = m.id
+</select>
+  	
+  	<insert id = "insertIntoEmployee" parameterType = "Employee" keyProperty = "id" useGeneratedKeys = "true">
+  		     INSERT INTO employee  
+         	<trim prefix = "(" suffix = ")" suffixOverrides = ",">
+         		<if test="name != null">name,</if>
+            	<if test="age != null">age,</if>
+           		<if test="role != null">role,</if>
+           		<if test="manager_id != null">manager_id,</if>
+         	</trim>
+         	<trim prefix = "VALUES (" suffix = ")" suffixOverrides = ",">
+        		<if test="name != null">#{name},</if>
+            	<if test="age != null">#{age},</if>
+           		<if test="role != null">#{role},</if> 	
+           		<if test="manager_id != null">#{manager_id},</if> 	
+               </trim>
+  	</insert>
+  	
+    <delete id="deleteEmployee" parameterType="int">
+        DELETE FROM employee WHERE id = #{id}
+    </delete>
+  	
+<select id="getEmployeeById" parameterType="int" resultMap="EmployeeWithManagerResultMap">
+    SELECT e.id , e.name, e.age , e.role, e.manager_id,
+           m.id AS m_id, m.name AS m_name, m.department AS m_department
+    FROM employee e
+    INNER JOIN manager m ON e.manager_id = m.id
+    WHERE e.id = #{id}
+</select>
+  	
+  	<update id = "updateEmployee" parameterType = "Employee">
+  	    UPDATE employee 
+  	    <set>
+  	    	<if test = "name != null">name = #{name},</if>
+  	    	<if test = "age != null">age = #{age},</if>
+  	    	<if test = "role != null">role = #{role},</if>
+  	    	<if test = "manager_id != null">manager_id = #{manager_id},</if>
+  	    </set>
+  	    WHERE id = #{id};
+  	</update>
+  	
+  </mapper>
