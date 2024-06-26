@@ -1,0 +1,19 @@
+
+CREATE TABLE employee (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    manager_id INT 
+);
+
+CREATE TABLE manager (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    department VARCHAR(255) NOT NULL
+);
+
+ALTER TABLE employee
+ADD CONSTRAINT fk_manager
+FOREIGN KEY (manager_id)
+REFERENCES manager(id);
