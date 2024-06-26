@@ -43,7 +43,7 @@ public class ManagerController {
 	
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 	@PostMapping(value = "/create" , produces = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<Object> createEmployee( @Valid @RequestBody Manager manager , BindingResult rsResult) {
+	public ResponseEntity<Object> createEmployee( @Valid @RequestBody Manager manager , BindingResult rsResult, consumes = MediaType.APPLICATION_JSON_VALUE) {
     	
     	MANAGER_LOGGER.info("Creating new manager data: {}", manager);
     	
@@ -93,7 +93,8 @@ public class ManagerController {
         }
     }
     
-    @PutMapping(value = "/update/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update/{id}" , produces = MediaType.APPLICATION_JSON_VALUE , 
+		consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<String> updateManagerById( @PathVariable int id ,  @ModelAttribute Manager manager) {
     	manager.setId(id);

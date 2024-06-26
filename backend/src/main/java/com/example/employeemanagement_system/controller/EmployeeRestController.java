@@ -35,7 +35,8 @@ public class EmployeeRestController {
 	}
 	
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
-	@PostMapping(value = "/create" , produces = MediaType.APPLICATION_JSON_VALUE )
+	@PostMapping(value = "/create" , produces = MediaType.APPLICATION_JSON_VALUE ,
+		    consumes = MediaType.APPLICATION_JSON_VALUE )
 	public ResponseEntity<Object> createEmployee( @Valid @RequestBody Employee employee , BindingResult rsResult) {
     	   employee_logger.info("Creating new employee with data: {}", employee);
     	if( rsResult.hasErrors()) {
@@ -85,7 +86,7 @@ public class EmployeeRestController {
     
     @PutMapping(value = "/update/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> updateEmployeeById( @PathVariable("id") String id , @ModelAttribute Employee employee) {
+    public ResponseEntity<String> updateEmployeeById( @PathVariable("id") String id , @ModelAttribute Employee employee, consumes = MediaType.APPLICATION_JSON_VALUE) {
         employee_logger.info("Updating employee with ID: {}", employee.getId());
         
         employee.setId(Integer.parseInt(id));
