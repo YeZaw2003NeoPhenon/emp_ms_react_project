@@ -56,15 +56,6 @@ The Employee Management System is a basic CRUD application built with React for 
 2. **Create a Database:**
    ```sql
 
-## Database Configuration
-``
-CREATE DATABASE employee_db;
-spring.datasource.url=jdbc:postgresql://localhost:5432/employee_db
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-``
 ## Running Guide
 
 # Database Configuration
