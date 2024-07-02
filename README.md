@@ -1,23 +1,94 @@
+# Employee Management System - Full-Stack Project
 
-# Employee Management System
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![React](https://img.shields.io/badge/React-17.0.2-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.5.4-brightgreen)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13-blue)
+![MyBatis](https://img.shields.io/badge/MyBatis-3.5.8-blue)
 
-A web application for managing employees and their information.
+## Table of Contents
+
+- [Description](#description)
+- [Features](#features)
+- [Backend](#backend)
+- [Frontend](#frontend)
+- [Running Guide](#running-guide)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
 ## Description
 
-The Employee Management System is a full-stack application built with React.js and Java Spring Boot. It allows autonomously administrators to manage employee records, including CRUD operations and role assignments.
+The Employee Management System is a basic CRUD application built with React for the frontend and Spring Boot for the backend. It allows users to add, edit, view, and delete employee records. Additionally, it includes a `ManagerTable` feature for managing and viewing manager-specific data.
+
 
 ## Features
 
-- Add, update, delete employees
-- Assign roles and managers
-- have sustainable entity connection with manager
-- View employee details and reports
-- 
-## Installation
-To run the Employee Management System locally, follow these steps:
+- Add, edit, view, and delete employee records
+- Responsive design
+- Form validation with Formik and Yup
+- Secure authentication
+- Manage and view manager-specific data with `ManagerTable`
+## Technologies Used
 
---renumerative bash instructions
-git clone https://github.com/your-username/employee-management.git
-cd employee-management
-npm install
+### Backend
+
+- **Spring REST API** - Framework for building the backend API
+- **MyBatis** - Persistence framework for interacting with the database
+- **PostgreSQL** - Relational database
+
+
+### Frontend
+
+- **React** - JavaScript library for building user interfaces
+- **React Router** - For navigation
+- **Formik** - For form management and validation
+- **Axios** - For making HTTP requests
+- **Bootstrap** - For responsive design
+  
+
+### Setting Up PostgreSQL
+
+1. **Install PostgreSQL:**
+   Follow the instructions on the [official PostgreSQL website](https://www.postgresql.org/download/) to install PostgreSQL on your system.
+
+2. **Create a Database:**
+   ```sql
+
+## Database Configuration
+``
+CREATE DATABASE employee_db;
+spring.datasource.url=jdbc:postgresql://localhost:5432/employee_db
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+``
+## Running Guide
+
+# Database Configuration
+``spring.datasource.url=jdbc:postgresql://localhost:5432/employee_db
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+``
+
+# MyBatis Configuration
+``mybatis.configuration.map-underscore-to-camel-case=true
+mybatis.configuration.use-generated-keys=true
+mybatis.mapper-locations=classpath:mappers/*.xml
+``
+
+**Backend Setup**
+``git clone https://github.com/YeZaw2003NeoPhenon/emp_ms_react_project.git
+cd emp_ms_react_project/backend``
+
+``./mvnw spring-boot:run``
+
+**Frontend Setup**
+
+``cd ../frontend``
+
+``npm install``
+
+``npm start``
