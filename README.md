@@ -1,11 +1,5 @@
 # Employee Management System - Full-Stack Project
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/React-17.0.2-blue)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.5.4-brightgreen)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-13-blue)
-![MyBatis](https://img.shields.io/badge/MyBatis-3.5.8-blue)
-
 ## Table of Contents
 
 - [Description](#description)
