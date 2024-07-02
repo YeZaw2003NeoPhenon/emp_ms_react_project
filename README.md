@@ -22,6 +22,7 @@ The Employee Management System is a basic CRUD application built with React for 
 - Form validation with Formik and Yup
 - Secure authentication
 - Manage and view manager-specific data with `ManagerTable`
+
 ## Technologies Used
 
 ### Backend
@@ -46,15 +47,15 @@ The Employee Management System is a basic CRUD application built with React for 
    Follow the instructions on the [official PostgreSQL website](https://www.postgresql.org/download/) to install PostgreSQL on your system.
 
 2. **Create a Database:**
-   ```sql
+   ```CREATE DATABASE employee_management_system```
 
 ## Running Guide
 
 # Database Configuration
-``spring.datasource.url=jdbc:postgresql://localhost:5432/employee_db
+ ```spring.datasource.url=jdbc:postgresql://localhost:5432/employee_db
 spring.datasource.username=your_username
 spring.datasource.password=your_password
-``
+ ```
 
 # MyBatis Configuration
 ``mybatis.configuration.map-underscore-to-camel-case=true
