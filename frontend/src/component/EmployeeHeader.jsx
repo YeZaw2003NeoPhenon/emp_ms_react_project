@@ -6,11 +6,10 @@ import { useState } from "react"
 import { CreateManagerModal } from "./CreateManagerModal"
 export const EmployeeHeader = ({headerName}) => {
     const[showManagerModal , setShowManagerModal ] = useState(false)
-
     const handleManagerShowModal = () => {
         setShowManagerModal(true)
     }
-
+    
     const handleManagerCloseModal = () => {
         setShowManagerModal(false)
     }
@@ -23,7 +22,7 @@ export const EmployeeHeader = ({headerName}) => {
         <NavbarCollapse id="emp_nav" className="d-flex flex-row align-items-center justify-content-end gap-2">
             <Nav className="ml-auto p-2">
                 <NavItem>
-                    <NavLink as={RounterNavLink} autoFocus  to = "/add" type = "button" className = "rounded-pill bg-primary text-light p-3 me-4 create_btn">
+                    <NavLink as={RounterNavLink} autoFocus  to = "/add" target="_parent" type = "button" className = "rounded-pill bg-primary text-light p-3 me-4 create_btn">
                         Create Employee
                     </NavLink>
                 </NavItem>
@@ -40,7 +39,7 @@ export const EmployeeHeader = ({headerName}) => {
                     <NavLink className = "text-light logout">Logout</NavLink>
                 </NavItem>
                 <NavItem>
-                <NavLink as={RounterNavLink} to="/managers" className = "d-block fw-bold">
+                <NavLink as={RounterNavLink} to="/managers" className = "d-block fw-bold" target = "_blank">
                  Manager Table
                 </NavLink>
                 </NavItem>

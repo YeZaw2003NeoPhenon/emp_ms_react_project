@@ -15,6 +15,7 @@ export const CreateManagerModal = ({showManagerModal , handleManagerCloseModal})
         name : '',
         department : ''
     })
+    
     const formik = useFormik({
         initialValues : manager,
         validationSchema : Yup.object({
@@ -26,10 +27,11 @@ export const CreateManagerModal = ({showManagerModal , handleManagerCloseModal})
             .max(50, 'Name must be 50 characters or less')
             .required('Name is required'),
             department: Yup.string()
+            .nonNullable('Department must not be empty')
             .required('Department is required'),
         })
         ,
-        onSubmit :  ( values, { setSubmitting , setErrors , setStatus }) => {
+        onSubmit :  ( values , { setSubmitting , setErrors , setStatus }) => {
             setSubmitting(true)
             managerService.createManager(values).then( response => {
                 setStatus({ success : 'Manager Created Vivaciously!'})

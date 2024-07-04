@@ -16,6 +16,7 @@ export const UpdateEmployeeForm = () => {
           role : '',
           manager_id : ''
     })
+
     const[buttonText , setButtonText] = useState("Update Employee")
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const {id} = useParams()
@@ -23,7 +24,6 @@ export const UpdateEmployeeForm = () => {
     const[isLoading , setIsLoading ] = useState(true)
     const[showModal , setShowModal] = useState(false)
     const history = useHistory()
-    const[employee , setEmployee] = useState(null)
 
     useEffect(() => {
         if(id){
@@ -31,7 +31,7 @@ export const UpdateEmployeeForm = () => {
                 setEmployees(response.data)
                 setTimeout(() => {
                     setIsLoading(false)
-                } , 1000)
+                } , 1500)
             })
             .catch( error => {
                 setError(`Employee Not Ultimately Trackable: ${error.message}`)
@@ -55,21 +55,17 @@ export const UpdateEmployeeForm = () => {
                 .required('Age is required'),
             role: Yup.string()
                 .required('Role is required'),
-                manager_id: Yup.number()
+            manager_id: Yup.number()
                 .required('Manager is required')
-                .positive('Manager ID must be positive')
-                .integer('Manager ID must be an integer'),
-
-
             }),
         onSubmit : (values , { setSubmitting , setErrors , setStatus }) => {
             setSubmitting(true)
             setIsButtonDisabled(true)
             setButtonText('Updating...')
               values.manager_id = parseInt(values.manager_id , 10 )
-            employeeService.updateEmployee(id, values ).then((response) => {
-                setStatus({success :  'Employee Updated Successfully'})
-                employee(response.data)
+            employeeService.updateEmployee(id, values).then((response) => {
+             setStatus({success :  'Employee Updated Successfully'})
+                setEmployees(response.data)
                 formik.setValues({
                     name: response.data.name,
                     age : response.data.age,
@@ -101,21 +97,17 @@ export const UpdateEmployeeForm = () => {
         }
     })
 
-    if(isLoading){
+   if(isLoading){
        return(
   <Container>
-    <Row className = "justify-content-md-center mt-3">
-        <Spinner animation="border" role="status" >
+     <Row className = "justify-content-md-center mt-3">
+        <Spinner animation="border" role="status">
             <span className="visually-hidden">Loading...</span>
-          </Spinner>
-            </Row>
+        </Spinner>
+     </Row>
    </Container>
        )
     }
-    if( !employee){
-       return <Alert variant="danger" >Employee Not Trackable</Alert>
-    }
-
     const handleShowModal = (e) => {
         e.preventDefault()
         setShowModal(true)
@@ -189,8 +181,9 @@ export const UpdateEmployeeForm = () => {
                          <FormGroup>
                                     <FormLabel htmlFor="manager_id">Manager ID:</FormLabel>
                                         <FormControl
-                                            type="text"
+                                            type="number"
                                             name="manager_id"
+                                            id = "manager_id"
                                             value={formik.values.manager_id}
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}

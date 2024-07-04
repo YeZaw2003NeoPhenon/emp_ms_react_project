@@ -41,6 +41,7 @@ export const ManagerTableDatas = () => {
     const handleDelete = () => {
       managerService.deleteManager(selectedId).then( response => {
           // fetchManagerDatas()
+          setManagers([...managers , response.data])
           setSuccessMessage('Manager Deleted Successfully!')
           setShowModal(false)
       }).catch(error => {

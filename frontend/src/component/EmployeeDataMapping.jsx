@@ -6,6 +6,7 @@ export const EmployeeDataMapping = ({ employee, handleDelete , showModal , selec
     const updatedHistoryPath = () => {
         history.push(`/edit/${employee.id}`)
     }
+
     return(
         <>
     <tr>
@@ -16,7 +17,7 @@ export const EmployeeDataMapping = ({ employee, handleDelete , showModal , selec
         <td>{ employee.manager ? employee.manager.name : 'No Manager Data Found'}</td>
         {/* <td typeof="hidden">{employee.manager_id}</td> */}
         <td className = "d-flex align-items-center justify-content-center flex-row gap-3"> 
-        <Button as={Link}  to={`/edit/${employee.id}`} onClick={updatedHistoryPath} variant = "success">Update</Button>
+        <Button as={Link}  onClick={updatedHistoryPath} variant = "success" target="_parent">Update</Button>
         <Button onClick={() => handleShowModal(employee.id)} variant = "danger" calssName = "fw-bold">Delete</Button>
         <Button variant = "info" onClick={() => findEmployeeById(employee.id)}>View</Button>
         </td>

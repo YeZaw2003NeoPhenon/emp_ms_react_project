@@ -7,7 +7,7 @@ export const ManagerTableDatasDetails = ({manager , showModal , handleShowModal 
               <td>{manager.name}</td>
               <td>{manager.department}</td>
               <td> 
-                <Button variant = "danger" className = "btn btn-md" onClick={() => handleShowModal(manager.id)}>Delete Manager</Button>
+                <Button variant = "danger" className = "btn btn-md" onClick={() => handleShowModal(manager.id)} >Delete Manager</Button>
               </td>
         </tr>
               <Modal

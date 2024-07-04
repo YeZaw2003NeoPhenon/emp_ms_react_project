@@ -19,7 +19,6 @@ import { api } from "../api/dataResources"
     const getAllEmployeesWithManager = () => {
         return api.get('/employees/with-managers')
     }
-    
 
    export default {
     createEmployee,
