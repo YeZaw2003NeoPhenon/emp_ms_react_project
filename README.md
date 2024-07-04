@@ -1,23 +1,87 @@
+# Employee Management System - Full-Stack Project
 
-# Employee Management System
+## Table of Contents
 
-A web application for managing employees and their information.
+- [Description](#description)
+- [Features](#features)
+- [Backend](#backend)
+- [Frontend](#frontend)
+- [Running Guide](#running-guide)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
 
 ## Description
 
-The Employee Management System is a full-stack application built with React.js and Java Spring Boot. It allows autonomously administrators to manage employee records, including CRUD operations and role assignments.
+The Employee Management System is a basic CRUD application built with React for the frontend and Spring Boot for the backend. It allows users to add, edit, view, and delete employee records. Additionally, it includes a `ManagerTable` feature for managing and viewing manager-specific data.
+
 
 ## Features
 
-- Add, update, delete employees
-- Assign roles and managers
-- have sustainable entity connection with manager
-- View employee details and reports
-- 
-## Installation
-To run the Employee Management System locally, follow these steps:
+- Add, edit, view, and delete employee records
+- Responsive design
+- Form validation with Formik and Yup
+- Secure authentication
+- Manage and view manager-specific data with `ManagerTable`
 
---renumerative bash instructions
-git clone https://github.com/your-username/employee-management.git
-cd employee-management
-npm install
+## Technologies Used
+
+### Backend
+
+- **Spring REST API** - Framework for building the backend API
+- **MyBatis** - Persistence framework for interacting with the database
+- **PostgreSQL** - Relational database
+
+
+### Frontend
+
+- **React** - JavaScript library for building user interfaces
+- **React Router** - For navigation
+- **Formik** - For form management and validation
+- **Axios** - For making HTTP requests
+- **Bootstrap** - For responsive design
+  
+
+### Setting Up PostgreSQL
+
+1. **Install PostgreSQL:**
+   Follow the instructions on the [official PostgreSQL website](https://www.postgresql.org/download/) to install PostgreSQL on your system.
+
+2. **Create a Database:**
+   ```CREATE DATABASE employee_management_system```
+
+## Running Guide
+
+# Database Configuration
+ ```spring.datasource.url=jdbc:postgresql://localhost:5432/employee_db
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+ ```
+
+# MyBatis Configuration
+``mybatis.configuration.map-underscore-to-camel-case=true
+mybatis.configuration.use-generated-keys=true
+mybatis.mapper-locations=classpath:mappers/*.xml
+``
+
+**Backend Setup**
+``git clone https://github.com/YeZaw2003NeoPhenon/emp_ms_react_project.git
+cd emp_ms_react_project/backend``
+
+``./mvnw spring-boot:run``
+
+**Frontend Setup**
+
+``cd ../frontend``
+
+``npm install``
+
+``npm start``
+
+## Contributing
+
+**Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.**
+`` Fork the Project
+Create your Feature Branch (git checkout -b feature/AmazingFeature)
+Commit your Changes (git commit -m 'Add some AmazingFeature')
+Push to the Branch (git push origin feature/AmazingFeature)
+Open a Pull Request ``
