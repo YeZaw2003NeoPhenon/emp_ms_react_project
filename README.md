@@ -20,7 +20,6 @@ The Employee Management System is a basic CRUD application built with React for 
 - Add, edit, view, and delete employee records
 - Responsive design
 - Form validation with Formik and Yup
-- Secure authentication
 - Manage and view manager-specific data with `ManagerTable`
 
 ## Technologies Used
