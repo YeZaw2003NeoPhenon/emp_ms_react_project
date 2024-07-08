@@ -2,6 +2,14 @@
   <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "C:\Users\Acer\Desktop\mybatis-3-mapper.dtd">
   <mapper namespace = "com.example.employeemanagement_system.repository.EmployeeRepository">
   
+    <resultMap type="Employee" id = "employeeResultMap">
+  	<id column = "id" property = "id"></id>
+  	<result column = "name" property = "name" ></result>
+  	<result column = "age" property = "age"></result>
+  	<result column = "role" property = "role"></result>
+    <result column = "manager_id" property = "manager_id"></result>
+  </resultMap>
+  
   <resultMap type="Employee" id = "EmployeeWithManagerResultMap">
   	<id column = "id" property = "id"></id>
   	<result column = "name" property = "name" ></result>
@@ -9,17 +17,35 @@
   	<result column = "role" property = "role"></result>
     <result column = "manager_id" property = "manager_id"></result>
     <association property = "manager" javaType = "manager"> 
-            <id property="id" column="m_id" />
-            <result property="name" column="m_name" />
-            <result property="department" column="m_department" />
+            <id property="id" column = "id" />
+            <result property="name" column="name" />
+            <result property="department" column="department"/>
     </association>
   </resultMap>
-  	
+  
+    <select id = "getAllEmployees" resultMap = "employeeResultMap">
+         	SELECT id , name ,age , role, manager_id FROM employee
+        <where>
+            <if test="name != null and name != ''">
+                AND title LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="age != null and age != ''">
+                AND age LIKE CONCAT('%', #{age}, '%')
+            </if>
+            <if test="role != null and role != ''">
+                AND role LIKE CONCAT('%', #{role}, '%')
+            </if>
+            <if test="manager_id != null and manager_id != ''">
+                AND manager_id LIKE CONCAT('%', #{manager_id}, '%')
+            </if>
+        </where>
+        </select>
+        
  <select id="getAllEmployeesWithManagers" resultMap="EmployeeWithManagerResultMap">
     SELECT e.id,e.name , e.age, e.role, e.manager_id ,
-           m.id AS m_id, m.name AS m_name, m.department AS m_department
+           m.id, m.name, m.department
     FROM employee e
-    INNER JOIN manager m ON e.manager_id = m.id
+    INNER JOIN manager m ON m.id = e.manager_id
 </select>
   	
   	<insert id = "insertIntoEmployee" parameterType = "Employee" keyProperty = "id" useGeneratedKeys = "true">
@@ -44,15 +70,16 @@
   	
 <select id="getEmployeeById" parameterType="int" resultMap="EmployeeWithManagerResultMap">
     SELECT e.id , e.name, e.age , e.role, e.manager_id,
-           m.id AS m_id, m.name AS m_name, m.department AS m_department
+           m.id, m.name, m.department
     FROM employee e
-    INNER JOIN manager m ON e.manager_id = m.id
+    INNER JOIN manager m ON m.id = e.manager_id
     WHERE e.id = #{id}
 </select>
   	
   	<update id = "updateEmployee" parameterType = "Employee">
   	    UPDATE employee 
   	    <set>
+  	    	<if test = "id != null">id = #{id},</if>
   	    	<if test = "name != null">name = #{name},</if>
   	    	<if test = "age != null">age = #{age},</if>
   	    	<if test = "role != null">role = #{role},</if>
@@ -60,5 +87,6 @@
   	    </set>
   	    WHERE id = #{id};
   	</update>
-  	
+
+    
   </mapper>

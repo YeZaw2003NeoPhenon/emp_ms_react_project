@@ -9,11 +9,11 @@
   </resultMap>
   
   	<select id = "getAllManagers" resultMap = "ManagerResultMap">
-  	  	SELECT id , name , department FROM manager;
+  	  	SELECT id , name , department FROM Manager;
   	</select>
   	
   	<insert id = "insertIntoManager" parameterType = "Manager" keyProperty = "id" useGeneratedKeys = "true">
-  		     INSERT INTO manager 
+  		     INSERT INTO Manager 
          	<trim prefix = "(" suffix = ")" suffixOverrides = ",">
          		<if test="id != null">id,</if>
             	<if test="name != null">name,</if>
@@ -27,16 +27,17 @@
   	</insert>
   	
   	<select resultMap = "ManagerResultMap" id = "getManagerById" parameterType = "int">
-  		SELECT id , name ,department FROM manager WHERE id = #{id}
+  		SELECT id,name,department FROM Manager WHERE id = #{id}
   	</select>
   	
   	<delete id = "deleteManager" parameterType = "int">
-  			DELETE FROM manager WHERE id = #{id};
+  			DELETE FROM Manager WHERE id = #{id};
   	</delete>
   	
   	<update id = "updateManager" parameterType = "Manager">
-  	    UPDATE manager 
+  	    UPDATE Manager 
   	    <set>
+  	    	<if test = "id != null">id = #{id},</if>
   	    	<if test = "name != null">name = #{name},</if>
   	    	<if test = "department != null">department = #{department},</if>
   	    </set>
@@ -47,4 +48,5 @@
     <select id="existsById" parameterType="int" resultType="boolean">
         SELECT EXISTS(SELECT 1 FROM manager WHERE id = #{id})
     </select>
+    
   </mapper>

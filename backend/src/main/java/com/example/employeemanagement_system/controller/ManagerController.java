@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,7 +42,7 @@ public class ManagerController {
 	
     @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 	@PostMapping(value = "/create" , produces = MediaType.APPLICATION_JSON_VALUE )
-	public ResponseEntity<Object> createEmployee( @Valid @RequestBody Manager manager , BindingResult rsResult, consumes = MediaType.APPLICATION_JSON_VALUE) {
+	public ResponseEntity<Object> createEmployee( @Valid @RequestBody Manager manager , BindingResult rsResult) {
     	
     	MANAGER_LOGGER.info("Creating new manager data: {}", manager);
     	
@@ -80,8 +79,8 @@ public class ManagerController {
 	
     @GetMapping( value = "/select/{id}" , produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Manager> getManagerById(@PathVariable("id") String id) {
-        Manager manager = managerServiceImp.getManagerById(Integer.parseInt(id));
+    public ResponseEntity<Manager> getManagerById(@PathVariable int id) {
+        Manager manager = managerServiceImp.getManagerById(id);
         MANAGER_LOGGER.info("Fetching manager with ID: {}", id);
         if( manager != null ) {
         	MANAGER_LOGGER.info("Manager retrieved successfully with ID: {}", id);
@@ -93,11 +92,16 @@ public class ManagerController {
         }
     }
     
-    @PutMapping(value = "/update/{id}" , produces = MediaType.APPLICATION_JSON_VALUE , 
-		consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/update/{id}" , produces = MediaType.APPLICATION_JSON_VALUE , consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<String> updateManagerById( @PathVariable int id ,  @ModelAttribute Manager manager) {
-    	manager.setId(id);
+    public ResponseEntity<String> updateManagerById( @PathVariable int id ,  @RequestBody Manager manager) {
+    	
+
+        if (!managerServiceImp.existsById(manager.getId())) {
+            MANAGER_LOGGER.error("Manager with ID: {} does not exist", manager.getId());
+            return ResponseEntity.badRequest().body("Manager with ID: " + manager.getId() + " does not exist");
+        }
+
     	MANAGER_LOGGER.info("Updating manager with ID: {}", id );
        int result =	managerServiceImp.updateManager(manager);
        
@@ -110,4 +114,5 @@ public class ManagerController {
     	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failed to update Manager! try out again!");
        }
     }
+    
 }

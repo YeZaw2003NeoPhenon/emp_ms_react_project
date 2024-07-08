@@ -44,9 +44,8 @@ public class EmployeeServiceImp implements EmployeeService{
 	@Override
 	public int updateEmployee(Employee employee) {
 		
-		int managerId = employee.getManager_id();
-		if( !managerRepository.existsById(managerId)) {
-            throw new IllegalArgumentException("Manager with ID " + managerId + " does not exist.");
+		if( !managerRepository.existsById(employee.getManager_id())) {
+            throw new IllegalArgumentException("Manager with ID " + employee.getManager_id() + " does not exist.");
 		}
 		return employeeRepository.updateEmployee(employee);
 	}
