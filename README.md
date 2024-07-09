@@ -84,3 +84,59 @@ Create your Feature Branch (git checkout -b feature/AmazingFeature)
 Commit your Changes (git commit -m 'Add some AmazingFeature')
 Push to the Branch (git push origin feature/AmazingFeature)
 Open a Pull Request ``
+
+
+```./mvnw spring-boot:run```
+
+
+### Frontend Setup
+
+```cd ../frontend```
+
+**Install Dependencies:**
+```npm install```
+
+**Start the Development Server:**
+```npm start```
+
+**Access the Application:**
+```Open your browser and navigate to http://localhost:3000.
+The application will prompt you to log in or create an account.```
+
+### API Endpoints
+
+## Authentication
+``POST /api/auth/login:`` Authenticate user and obtain a token.
+``POST /api/auth/register:`` Register a new user.
+
+## Posts
+``GET /api/posts:`` Retrieve all posts.
+``GET /api/posts/{id}:`` Retrieve a post by ID.
+``POST /api/posts:`` Create a new post.
+``PUT /api/posts/{id}:`` Update a post by ID.
+``DELETE /api/posts/{id}:`` Delete a post by ID.
+
+### Contributing
+
+## Fork the Repository:
+**We welcome contributions to enhance the project! Follow these steps to contribute:
+Click the "Fork" button at the top right of the repository page.**
+
+## Create a New Branch:
+```git checkout -b feature/your-feature```
+
+## Make Your Changes:
+Implement your feature or bug fix.
+
+## Commit Your Changes:
+```git commit -m "Add feature: your feature description"```
+
+## Push To The Branch
+```git push origin feature/your-feature```
+
+## Create a Pull Request:
+Open a pull request on GitHub and describe your changes.
+
+### Acknowledgements
+🙏
+Special thanks to the open-source community for the tools and libraries used in this project
