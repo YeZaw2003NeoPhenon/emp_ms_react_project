@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "C:\Users\Acer\Desktop\mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.example.employeemanagement_system.repository.userDetailModelRepository">
+	
+	<resultMap type="userDetailModel" id="userDetailModelMap">
+		<id column = "username" property = "username"></id>
+		<result column = "password" property = "password"/>
+ 		<result column="enabled" property="enabled"/>
+		<result column="authority" property="authority"/>
+	</resultMap>
+	
+	<select id="loginProcess" parameterType="String" resultMap="userDetailModelMap">
+ 		SELECT users.username , users.password , users.enabled , authorities.authority FROM users
+ 		 INNER JOIN authorities ON users.username = authorities.username  WHERE users.username = #{username}
+	</select>
+	
+	<select id="findByUsername" parameterType="String" resultMap="userDetailModelMap">
+		SELECT u.username, u.password, u.enabled, a.authority
+		FROM users u
+		INNER JOIN authorities a ON u.username = a.username
+		WHERE u.username = #{username}
+	</select>
+	
+</mapper>

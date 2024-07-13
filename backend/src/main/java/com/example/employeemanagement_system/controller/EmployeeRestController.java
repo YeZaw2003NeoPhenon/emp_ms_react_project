@@ -103,6 +103,7 @@ public class EmployeeRestController {
     }
     
 	 @GetMapping(value ="/with-managers" , produces = MediaType.APPLICATION_JSON_VALUE)
+	  @ResponseStatus(HttpStatus.OK)
 	    public List<Employee> getAllEmployeesWithManagers() {
 	       employee_logger.info("Fetching Employees Datas Recuperated With Managers ");
 	       List<Employee> employee_list=  employeeServiceImp.getAllEmployeesWithManagers();

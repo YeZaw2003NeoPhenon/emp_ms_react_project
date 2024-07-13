@@ -3,11 +3,12 @@ import {useHistory} from 'react-router-dom'
 import { useState } from "react"
 import { useFormik } from "formik"
 import * as Yup from 'yup'
-import { Button , Card , Container , Form , Row , Col, CardHeader, CardBody, Alert , FormGroup ,FormControl , FormLabel , Spinner } from "react-bootstrap"
+import { Button , Card , Container , Form , Row , Col, CardHeader, CardBody, Alert , FormGroup ,FormControl , FormLabel , Spinner , ButtonGroup} from "react-bootstrap"
 export const CreateEmployeeForm = () => {
 
     const[ buttonText , setButtonText ] = useState('Create Employee')
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+    const[buttonVariant , setButtonVariant ] = useState("primary")
     const [employees , setEmployees ] = useState({
         name : '',
         age : '',
@@ -47,6 +48,7 @@ export const CreateEmployeeForm = () => {
                     // formik.setValues(response.data)
                     setTimeout(() => {
                         setButtonText('Created')
+                        setButtonVariant('success')
                         setIsButtonDisabled(true)
                         setSubmitting(false)
                         setTimeout(() => {
@@ -56,6 +58,7 @@ export const CreateEmployeeForm = () => {
                 })
                 .catch(error => {
                     setButtonText('Create Employee');
+                    setButtonVariant('primary')
                     setIsButtonDisabled(false);
                     setErrors({ submit : 'There is unfathomable error while submitting employee datas!'})
                     setSubmitting(false);
@@ -65,8 +68,8 @@ export const CreateEmployeeForm = () => {
 
     return(
         <Container>
-        <Row className="justify-content-md-center">
-            <Col md="6">
+        <Row className="justify-content-md-center d-flex flex-column align-items-center">
+             <Col md = '6'>
                 <Card>
                     <CardHeader>
                         <h2>Create Employee</h2>
@@ -129,9 +132,10 @@ export const CreateEmployeeForm = () => {
                                             {formik.errors.manager_id}
                                         </FormControl.Feedback>
                                     </FormGroup>
+                                    <ButtonGroup className = "d-flex align-items-center justify-content-center gap-4 fw-bold">
                                     <Button
-                                        className="mt-4"
-                                        variant="primary"
+                                        className="mt-4 rounded-pill"
+                                        variant={buttonVariant}
                                         type="submit"
                                         disabled={ isButtonDisabled ||  formik.isSubmitting}
                                     >
@@ -143,20 +147,23 @@ export const CreateEmployeeForm = () => {
                                                 role = "status"
                                                 aria-label = "speactular Spinner Cultivation"
                                                 aria-hidden = "true"/>
-
                                                {buttonText}
                                             </>
                                         ) : (
                                             buttonText
                                         )}
                                     </Button>
+                                    <Button onClick={() => formik.resetForm()} type = "reset" className = "btn-secondary mt-4 rounded-pill"> 
+                                        Reset
+                                    </Button>
+                                    </ButtonGroup>
                                 </Form>
-                            { formik.status && <Alert className = "mt-4" variant = "success">{formik.status.success}</Alert>}
-                            { formik.errors.submit && <Alert className = "mt-4" variant = "danger">{formik.errors.submit}</Alert>}
                     </CardBody>
                 </Card>
             </Col>
-        </Row>
+            { formik.status && <Alert className = "mt-4" variant = "success">{formik.status.success}</Alert>}
+        { formik.errors.submit && <Alert className = "mt-4" variant = "danger">{formik.errors.submit}</Alert>} 
+         </Row>
     </Container>
 
     )

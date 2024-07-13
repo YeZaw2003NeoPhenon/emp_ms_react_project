@@ -2,11 +2,10 @@ import { useEffect, useState } from "react"
 import {Table , Container , Row , Col , Spinner, Alert} from "react-bootstrap"
 import managerService from "../services/managerService"
 import { ManagerTableDatasDetails } from "./ManagerTableDatasDetails"
-export const ManagerTableDatas = () => {
+export const ManagerTableDatas = ({alertMessage , alertVariant , showAlertMessage}) => {
     const[managers , setManagers ] = useState([])
     const[isLoading , setIsLoading ] = useState(true)
     const[error , setError ] = useState(null)
-    const[successMessage , setSuccessMessage ] = useState(null)
     const[showModal , setShowModal ] = useState(false)
     const[selectedId , setSelectedId ] = useState(null)
 
@@ -14,7 +13,7 @@ export const ManagerTableDatas = () => {
       setSelectedId(id)
       setShowModal(true)
     }
-
+    
     const handleCloseModal = () => {
       setSelectedId(null)
       setShowModal(false)
@@ -29,11 +28,9 @@ export const ManagerTableDatas = () => {
             setManagers(response.data)
             setIsLoading(false)
             setError(null)
-            setSuccessMessage(null)
         })
         .catch((error) => {
         setIsLoading(false)
-        setSuccessMessage(null)
         setError(`There was an error fetching manager data: ${error.message}`);
       })
     }
@@ -42,7 +39,7 @@ export const ManagerTableDatas = () => {
       managerService.deleteManager(selectedId).then( response => {
           // fetchManagerDatas()
           setManagers([...managers , response.data])
-          setSuccessMessage('Manager Deleted Successfully!')
+          showAlertMessage('Manager Noteworthily Deleted!','success')
           setShowModal(false)
       }).catch(error => {
           setError(`there is an maddening error deleting employees datas: ${error.message}`)
@@ -90,8 +87,8 @@ export const ManagerTableDatas = () => {
            ))}
         </tbody>
         </Table> 
-        {successMessage && <Alert variant="success" className = "fw-bold mt-3 ">{successMessage}</Alert>}
         {error && <Alert variant="danger" className = "fw-bold mt-3 ">{error}</Alert>}
+        {alertMessage && <Alert  variant={alertVariant} className = "fw-bold mt-3 ">{alertMessage}</Alert>}
                 </Col>
             </Row>
         </Container>

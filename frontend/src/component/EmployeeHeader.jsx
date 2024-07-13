@@ -1,11 +1,15 @@
 
-import { Nav , Navbar , NavItem , NavLink , NavbarToggle , NavbarCollapse , NavbarBrand} from "react-bootstrap"
+import { Nav , Navbar , NavItem , NavLink , NavbarToggle , NavbarCollapse , NavbarBrand, Alert} from "react-bootstrap"
 import { NavLink as RounterNavLink } from "react-router-dom"
 import './css/EmployeeHeader.css'
 import { useState } from "react"
+import { useHistory } from "react-router-dom"
 import { CreateManagerModal } from "./CreateManagerModal"
-export const EmployeeHeader = ({headerName}) => {
+import axios from "axios"
+export const EmployeeHeader = ({headerName, showAlertMessage}) => {
+
     const[showManagerModal , setShowManagerModal ] = useState(false)
+    const history = useHistory()
     const handleManagerShowModal = () => {
         setShowManagerModal(true)
     }
@@ -13,7 +17,21 @@ export const EmployeeHeader = ({headerName}) => {
     const handleManagerCloseModal = () => {
         setShowManagerModal(false)
     }
-    
+
+    const logOutHandler = async() => {
+        try{
+            await axios.post('/api/logout');
+            setTimeout(() => {
+                localStorage.removeItem('token');
+                history.push('/login')
+                showAlertMessage('You Logged out successfully!' , 'success')
+            },1000)
+        }
+        catch(error){
+            showAlertMessage('There has been extortionate error while loggint out of account!' , 'danger')
+        }
+    }
+
     return(
         <>
         <Navbar bg="dark" expand="lg" className = " p-4 mb-5">
@@ -27,7 +45,7 @@ export const EmployeeHeader = ({headerName}) => {
                     </NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink className = "text-light home">Home</NavLink>
+                    <NavLink className = "text-light home" onClick={() => history.push('/')} target = "_parent">Home</NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink className = "text-light profile">Profile</NavLink>
@@ -36,7 +54,7 @@ export const EmployeeHeader = ({headerName}) => {
                     <NavLink className = "text-light settings">Settings</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink className = "text-light logout">Logout</NavLink>
+                    <NavLink className = "text-light logout" onClick={logOutHandler}>Logout</NavLink>
                 </NavItem>
                 <NavItem>
                 <NavLink as={RounterNavLink} to="/managers" className = "d-block fw-bold" target = "_blank">

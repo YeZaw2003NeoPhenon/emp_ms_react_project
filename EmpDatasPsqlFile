@@ -17,3 +17,14 @@ ALTER TABLE employee
 ADD CONSTRAINT fk_manager
 FOREIGN KEY (manager_id)
 REFERENCES manager(id);
+
+
+
+CREATE TABLE users(username VARCHAR(50) not null primary key,
+		  password VARCHAR(500) not null,
+		  enabled boolean not null);
+
+CREATE TABLE authorities (username VARCHAR(50) not null,
+			 authority VARCHAR(50) not null,
+		       	constraint fk_authorities_users foreign key(username) references users(username));
+			CREATE unique index ix_auth_username on authorities (username,authority);
