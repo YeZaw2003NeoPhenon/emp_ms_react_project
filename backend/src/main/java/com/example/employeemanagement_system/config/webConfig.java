@@ -61,7 +61,9 @@ public class webConfig{
                 .authorizeRequests()
                 .requestMatchers("/api/authenticate").permitAll()
                 .requestMatchers("/api/accountCreationProcess").permitAll()
+                .requestMatchers("/api/logout").permitAll()
                 .requestMatchers("/api/employees/**").permitAll()
+                .requestMatchers("/api/managers/**").permitAll()
                 .requestMatchers("/css/**", "/img/**", "/js/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/v3/api-docs/**", "/v3/api-docs.yaml", "/v2/api-docs").permitAll()
                 .requestMatchers("/users/**").hasRole("users")
@@ -104,7 +106,6 @@ public class webConfig{
                 })
                 .and()
                 .logout()
-                .logoutUrl("/api/logout")
                 .logoutSuccessHandler(new LogoutSuccessHandler() {
 					
 					@Override
