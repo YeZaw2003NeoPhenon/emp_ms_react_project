@@ -1,12 +1,16 @@
-import { Link, useHistory, useParams } from "react-router-dom"
-import { Button , Modal , ModalHeader , ModalBody , ModalDialog , ModalTitle , ModalFooter , Row , Col } from "react-bootstrap"
-export const EmployeeDataMapping = ({ employee, handleDelete , showModal , selectedId , handleShowModal ,handleCloseModal , findEmployeeById  , selectedEmployee , setSelectedEmployee }) => {
+import { Link, useHistory } from "react-router-dom"
+import { Button , Modal , ModalHeader , ModalBody , ModalDialog , ModalTitle , ModalFooter } from "react-bootstrap"
+import { EmployeeProfile } from "./EmployeeProfile"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
+
+export const EmployeeDataMapping = ({ employee, handleDelete , showModal , handleShowModal ,handleCloseModal , findEmployeeById  , selectedEmployee , setSelectedEmployee }) => {
     const history = useHistory()
 
     const updatedHistoryPath = () => {
         history.push(`/edit/${employee.id}`)
     }
-
+    
     return(
         <>
     <tr>
@@ -17,9 +21,15 @@ export const EmployeeDataMapping = ({ employee, handleDelete , showModal , selec
         <td>{ employee.manager ? employee.manager.name : 'No Manager Data Found'}</td>
         {/* <td typeof="hidden">{employee.manager_id}</td> */}
         <td className = "d-flex align-items-center justify-content-center flex-row gap-3"> 
-        <Button as={Link}  onClick={updatedHistoryPath} variant = "success" target="_parent">Update</Button>
-        <Button onClick={() => handleShowModal(employee.id)} variant = "danger" calssName = "fw-bold">Delete</Button>
-        <Button variant = "info" onClick={() => findEmployeeById(employee.id)}>View</Button>
+        <Button as={Link}  onClick={updatedHistoryPath} variant = "success" target="_parent">
+        <FontAwesomeIcon icon={faEdit} /> Edit
+        </Button>
+        <Button onClick={() => handleShowModal(employee.id)} variant = "danger" calssName = "fw-bold">
+        <FontAwesomeIcon icon={faTrash} /> Delete
+        </Button>
+        <Button variant = "info" onClick={() => findEmployeeById(employee.id)}>
+        <FontAwesomeIcon icon={faEye} /> View
+        </Button>
         </td>
     </tr>
        <Modal show = {showModal} onHide = {handleCloseModal}>
@@ -37,29 +47,8 @@ export const EmployeeDataMapping = ({ employee, handleDelete , showModal , selec
         </ModalFooter>
        </Modal>
        <aside>
-        { selectedEmployee && (
-            <Modal show = {true} onHide={() => setSelectedEmployee(null)}>
-                  <Modal.Header closeButton>
-                        <Modal.Title>Employee Details With Corresponding Managers</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <p>ID: {selectedEmployee.id}</p>
-                        <p>Name: {selectedEmployee.name}</p>
-                        <p>Age: {selectedEmployee.age}</p>
-                        <p>Role: {selectedEmployee.role}</p>
-                        { selectedEmployee.manager && (
-                                <>
-                                    <p>Manager ID: {selectedEmployee.manager.id}</p>
-                                    <p>Manager Name: {selectedEmployee.manager.name}</p>
-                                    <p>Manager Department Name : {selectedEmployee.manager.department}</p>
-                                </>
-                            )}
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setSelectedEmployee(null)}>Close</Button>
-                    </Modal.Footer>
-            </Modal>
-        )}
+        <EmployeeProfile selectedEmployee = {selectedEmployee}
+                        setSelectedEmployee = {setSelectedEmployee}/>
        </aside>
       </>
 
