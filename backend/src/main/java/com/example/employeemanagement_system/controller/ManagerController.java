@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.employeemanagement_system.entityModel.Employee;
 import com.example.employeemanagement_system.entityModel.Manager;
 import com.example.employeemanagement_system.service.ManagerServiceImp;
 
@@ -113,6 +115,24 @@ public class ManagerController {
     	   MANAGER_LOGGER.error("Failed to update manager with ID: {}", manager.getId());
     	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("failed to update Manager! try out again!");
        }
+    }
+    
+    @RequestMapping(value = "/{id}/employees" , produces = MediaType.APPLICATION_JSON_VALUE , method = RequestMethod.GET)
+    public List<Employee> getEmployeesForManager(@PathVariable int id) {
+        return managerServiceImp.getManagerById(id).getEmployees();
+    }
+    
+    @RequestMapping(value = "/employees/{count}", method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Manager>> getManagersByEmployeeCount(@PathVariable Integer count) {
+        List<Manager> managers = managerServiceImp.getManagersByEmployeeCount(count);
+        MANAGER_LOGGER.info("Fetching managers with employee count: {}", count);
+        if (!managers.isEmpty()) {
+            MANAGER_LOGGER.info("Managers retrieved successfully with employee count: {}", count);
+            return ResponseEntity.ok(managers);
+        } else {
+            MANAGER_LOGGER.error("No managers found with employee count: {}", count);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     
 }

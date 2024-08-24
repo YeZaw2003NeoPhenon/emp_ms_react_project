@@ -1,11 +1,13 @@
 package com.example.employeemanagement_system.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.employeemanagement_system.entityModel.Employee;
+import com.example.employeemanagement_system.exception.managerAlreadyExistsException;
 import com.example.employeemanagement_system.repository.EmployeeRepository;
 import com.example.employeemanagement_system.repository.ManagerRepository;
 
@@ -25,12 +27,14 @@ public class EmployeeServiceImp implements EmployeeService{
 
 	@Override
 	public int insertIntoEmployee(Employee employee) {
-		
 		return employeeRepository.insertIntoEmployee(employee);
 	}
 
 	@Override
 	public int deleteEmployee(int id) {
+		if( !employeeRepository.isEmployeeExist(id).isPresent()) {
+			 
+		}
 		
 		return employeeRepository.deleteEmployee(id);
 	}
@@ -43,9 +47,8 @@ public class EmployeeServiceImp implements EmployeeService{
 
 	@Override
 	public int updateEmployee(Employee employee) {
-		
 		if( !managerRepository.existsById(employee.getManager_id())) {
-            throw new IllegalArgumentException("Manager with ID " + employee.getManager_id() + " does not exist.");
+            throw new managerAlreadyExistsException("Manager with Id" + employee.getManager_id() + "already exists!");
 		}
 		return employeeRepository.updateEmployee(employee);
 	}
@@ -53,6 +56,11 @@ public class EmployeeServiceImp implements EmployeeService{
 	@Override
 	public List<Employee> getAllEmployeesWithManagers() {
 		return employeeRepository.getAllEmployeesWithManagers();
+	}
+
+	@Override
+	public Optional<Employee> isEmployeeExist(int id) {
+		return employeeRepository.isEmployeeExist(id);
 	}
 	
 }

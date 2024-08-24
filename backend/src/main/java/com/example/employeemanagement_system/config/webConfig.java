@@ -7,11 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,7 +41,6 @@ public class webConfig{
 		this.userDetailServiceImp = userDetailServiceImp;
 	}
 	
-
 	@Autowired
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailServiceImp);
@@ -50,7 +51,14 @@ public class webConfig{
 		return new BCryptPasswordEncoder();
 	}
 	
-
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+		authenticationProvider.setUserDetailsService(userDetailServiceImp);
+		authenticationProvider.setPasswordEncoder(passwordEncoder());
+		return authenticationProvider;
+	}
+	
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -85,6 +93,9 @@ public class webConfig{
                                 }
                             }
                         }
+                        
+                        String usename = authentication.getName();
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
                         Cookie successCookie = new Cookie("successCookie", "true");
                         successCookie.setPath("/");
                         successCookie.setHttpOnly(true);
@@ -119,6 +130,7 @@ public class webConfig{
 	                    response.sendRedirect("/login?logout=wrappedUp");
 					}
 				})
+                
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .and()

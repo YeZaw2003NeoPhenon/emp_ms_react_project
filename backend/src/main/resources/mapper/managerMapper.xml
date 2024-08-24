@@ -2,15 +2,30 @@
   <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "C:\Users\Acer\Desktop\mybatis-3-mapper.dtd">
   <mapper namespace = "com.example.employeemanagement_system.repository.ManagerRepository">
   
-    <resultMap type="Manager" id = "ManagerResultMap">
+  <resultMap type="Manager" id = "ManagerResultMap">
   	<id column = "id" property = "id"></id>
   	<result column = "name" property = "name" ></result>
   	<result column = "department" property = "department"></result>
+    <collection property="employees" ofType="Employee" column="id" select="selectEmployeeForParticularManager"/>
   </resultMap>
   
   	<select id = "getAllManagers" resultMap = "ManagerResultMap">
   	  	SELECT id , name , department FROM Manager;
   	</select>
+  	
+  	<select id = "selectEmployeeForParticularManager" resultType="Employee" parameterType="int">
+  			SELECT e.id , e.name, e.age , e.role FROM employee e 
+			WHERE e.manager_id = #{manager_id}
+  	</select>
+  	
+	<select id="getManagersByEmployeeCount" resultMap="ManagerResultMap">
+    	SELECT m.id, m.name, m.department
+    		FROM Manager m
+    	LEFT JOIN Employee e ON e.manager_id = m.id
+    		GROUP BY m.id, m.name, m.department
+    	HAVING COUNT(e.id) = #{count}
+    		ORDER BY m.name;
+	</select>
   	
   	<insert id = "insertIntoManager" parameterType = "Manager" keyProperty = "id" useGeneratedKeys = "true">
   		     INSERT INTO Manager 
@@ -44,7 +59,6 @@
   	    WHERE id = #{id};
   	</update>
   	
-
     <select id="existsById" parameterType="int" resultType="boolean">
         SELECT EXISTS(SELECT 1 FROM manager WHERE id = #{id})
     </select>

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.employeemanagement_system.entityModel.Employee;
 import com.example.employeemanagement_system.entityModel.Manager;
 import com.example.employeemanagement_system.repository.ManagerRepository;
 
@@ -43,6 +44,16 @@ public class ManagerServiceImp implements ManagerService {
 	@Override
 	public boolean existsById(int id) {
 		return managerRepository.existsById(id);
+	}
+
+	@Override
+	public Employee getEmployeeForManager(int id) {
+		return managerRepository.selectEmployeeForParticularManager(id);
+	}
+
+	@Override
+	public List<Manager> getManagersByEmployeeCount(int count) {
+		return managerRepository.getManagersByEmployeeCount(count);
 	}
 	
 }

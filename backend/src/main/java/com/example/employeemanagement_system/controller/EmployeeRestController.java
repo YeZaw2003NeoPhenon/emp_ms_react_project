@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.employeemanagement_system.entityModel.Employee;
 import com.example.employeemanagement_system.service.EmployeeServiceImp;
+import com.example.employeemanagement_system.service.userDetailServiceImp;
 
 import jakarta.validation.Valid;
 
@@ -22,6 +23,8 @@ public class EmployeeRestController {
 	@Autowired
 	private EmployeeServiceImp employeeServiceImp;
 	
+	@Autowired
+	private userDetailServiceImp userDetailServiceImp;
 	
 	private static final Logger employee_logger = LoggerFactory.getLogger(EmployeeRestController.class);
 	
@@ -30,6 +33,8 @@ public class EmployeeRestController {
 	public List<Employee> getAllEmployees(){
 		employee_logger.info("Fetching Employees Datas");
 		List<Employee> employees = employeeServiceImp.getAllEmployees();
+	    String currentUserName = userDetailServiceImp.getCurrentUserName();
+	    System.out.println(" Current User : "+currentUserName);
 		employee_logger.info("Retrived Employees + {} ", employees.size());
 		return employees;
 	}
@@ -103,11 +108,11 @@ public class EmployeeRestController {
     }
     
 	 @GetMapping(value ="/with-managers" , produces = MediaType.APPLICATION_JSON_VALUE)
-	  @ResponseStatus(HttpStatus.OK)
 	    public List<Employee> getAllEmployeesWithManagers() {
 	       employee_logger.info("Fetching Employees Datas Recuperated With Managers ");
 	       List<Employee> employee_list=  employeeServiceImp.getAllEmployeesWithManagers();
 	       employee_logger.info("Retrived Employees + {} ", employee_list.size());
 	       return employee_list;
 	    }
+	 
 }
