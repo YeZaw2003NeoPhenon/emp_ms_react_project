@@ -117,22 +117,22 @@ public class ManagerController {
        }
     }
     
-    @RequestMapping(value = "/{id}/employees" , produces = MediaType.APPLICATION_JSON_VALUE , method = RequestMethod.GET)
-    public List<Employee> getEmployeesForManager(@PathVariable int id) {
-        return managerServiceImp.getManagerById(id).getEmployees();
-    }
+    // @RequestMapping(value = "/{id}/employees" , produces = MediaType.APPLICATION_JSON_VALUE , method = RequestMethod.GET)
+    // public List<Employee> getEmployeesForManager(@PathVariable int id) {
+    //     return managerServiceImp.getManagerById(id).getEmployees();
+    // }
     
-    @RequestMapping(value = "/employees/{count}", method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Manager>> getManagersByEmployeeCount(@PathVariable Integer count) {
-        List<Manager> managers = managerServiceImp.getManagersByEmployeeCount(count);
-        MANAGER_LOGGER.info("Fetching managers with employee count: {}", count);
-        if (!managers.isEmpty()) {
-            MANAGER_LOGGER.info("Managers retrieved successfully with employee count: {}", count);
-            return ResponseEntity.ok(managers);
-        } else {
-            MANAGER_LOGGER.error("No managers found with employee count: {}", count);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+    // @RequestMapping(value = "/employees/{count}", method = RequestMethod.GET , produces = MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<List<Manager>> getManagersByEmployeeCount(@PathVariable Integer count) {
+    //     List<Manager> managers = managerServiceImp.getManagersByEmployeeCount(count);
+    //     MANAGER_LOGGER.info("Fetching managers with employee count: {}", count);
+    //     if (!managers.isEmpty()) {
+    //         MANAGER_LOGGER.info("Managers retrieved successfully with employee count: {}", count);
+    //         return ResponseEntity.ok(managers);
+    //     } else {
+    //         MANAGER_LOGGER.error("No managers found with employee count: {}", count);
+    //         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //     }
+    // }
     
 }
