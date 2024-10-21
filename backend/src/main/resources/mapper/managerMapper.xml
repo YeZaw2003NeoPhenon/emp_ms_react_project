@@ -13,19 +13,19 @@
   	  	SELECT id , name , department FROM Manager;
   	</select>
   	
-  	<select id = "selectEmployeeForParticularManager" resultType="Employee" parameterType="int">
+<!--   	<select id = "selectEmployeeForParticularManager" resultType="Employee" parameterType="int">
   			SELECT e.id , e.name, e.age , e.role FROM employee e 
 			WHERE e.manager_id = #{manager_id}
-  	</select>
+  	</select> -->
   	
-	<select id="getManagersByEmployeeCount" resultMap="ManagerResultMap">
+<!-- 	<select id="getManagersByEmployeeCount" resultMap="ManagerResultMap">
     	SELECT m.id, m.name, m.department
     		FROM Manager m
     	LEFT JOIN Employee e ON e.manager_id = m.id
     		GROUP BY m.id, m.name, m.department
     	HAVING COUNT(e.id) = #{count}
     		ORDER BY m.name;
-	</select>
+	</select> -->
   	
   	<insert id = "insertIntoManager" parameterType = "Manager" keyProperty = "id" useGeneratedKeys = "true">
   		     INSERT INTO Manager 
