@@ -17,7 +17,7 @@ public interface ManagerRepository {
   public abstract int deleteManager(int id);
   public abstract boolean existsById(int id); 
   
-  public abstract Employee selectEmployeeForParticularManager(@Param("manager_id") int id);
+  // public abstract Employee selectEmployeeForParticularManager(@Param("manager_id") int id);
   
-  public abstract List<Manager> getManagersByEmployeeCount(@Param("count") Integer count);
+  // public abstract List<Manager> getManagersByEmployeeCount(@Param("count") Integer count);
 }
