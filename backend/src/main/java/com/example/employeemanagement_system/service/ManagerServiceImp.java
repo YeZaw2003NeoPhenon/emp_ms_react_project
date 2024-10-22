@@ -46,14 +46,14 @@ public class ManagerServiceImp implements ManagerService {
 		return managerRepository.existsById(id);
 	}
 
-	@Override
-	public Employee getEmployeeForManager(int id) {
-		return managerRepository.selectEmployeeForParticularManager(id);
-	}
+	// @Override
+	// public Employee getEmployeeForManager(int id) {
+	// 	return managerRepository.selectEmployeeForParticularManager(id);
+	// }
 
-	@Override
-	public List<Manager> getManagersByEmployeeCount(int count) {
-		return managerRepository.getManagersByEmployeeCount(count);
-	}
+	// @Override
+	// public List<Manager> getManagersByEmployeeCount(int count) {
+	// 	return managerRepository.getManagersByEmployeeCount(count);
+	// }
 	
 }

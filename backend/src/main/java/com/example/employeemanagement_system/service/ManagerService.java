@@ -12,6 +12,6 @@ public interface ManagerService {
 	    int updateManager(Manager manager);
 	    int deleteManager(int id);
 	    boolean existsById(int id );
-	    Employee getEmployeeForManager(int id);
-	    List<Manager> getManagersByEmployeeCount(int count);
+	    // Employee getEmployeeForManager(int id);
+	    // List<Manager> getManagersByEmployeeCount(int count);
 }
