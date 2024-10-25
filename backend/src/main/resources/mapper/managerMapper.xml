@@ -6,7 +6,7 @@
   	<id column = "id" property = "id"></id>
   	<result column = "name" property = "name" ></result>
   	<result column = "department" property = "department"></result>
-    <collection property="employees" ofType="Employee" column="id" select="selectEmployeeForParticularManager"/>
+<!--     <collection property="employees" ofType="Employee" column="id" select="selectEmployeeForParticularManager"/> -->
   </resultMap>
   
   	<select id = "getAllManagers" resultMap = "ManagerResultMap">
