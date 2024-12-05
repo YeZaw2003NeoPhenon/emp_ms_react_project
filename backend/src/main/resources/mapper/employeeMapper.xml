@@ -2,32 +2,34 @@
   <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "C:\Users\Acer\Desktop\mybatis-3-mapper.dtd">
   <mapper namespace = "com.example.employeemanagement_system.repository.EmployeeRepository">
   
-    <resultMap type="Employee" id = "employeeResultMap">
+  <resultMap type="Employee" id = "employeeResultMap">
   	<id column = "id" property = "id"></id>
   	<result column = "name" property = "name" ></result>
   	<result column = "age" property = "age"></result>
   	<result column = "role" property = "role"></result>
-    <result column = "manager_id" property = "manager_id"></result>
+  	<result column = "manager_id" property = "manager_id"></result>
   </resultMap>
   
   <resultMap type="Employee" id = "EmployeeWithManagerResultMap">
   	<id column = "id" property = "id"></id>
-  	<result column = "name" property = "name" ></result>
-  	<result column = "age" property = "age"></result>
-  	<result column = "role" property = "role"></result>
-    <result column = "manager_id" property = "manager_id"></result>
-    <association property = "manager" javaType = "manager"> 
-            <id property="id" column = "id" />
-            <result property="name" column="name" />
-            <result property="department" column="department"/>
-    </association>
+  	<result column = "name" property = "name"/>
+  	<result column = "age" property = "age"/>
+  	<result column = "role" property = "role"/>
+    <result column = "manager_id" property = "manager_id"/> <!-- manay to one rel - as many employees belongs to one manager -->
+    <association property = "manager" javaType = "Manager"  column = "manager_id" resultMap = "managerResultMap"/>
+  </resultMap>
+  
+  <resultMap type = "Manager" id = "managerResultMap">
+  	        <id property="id" column = "manager_id"/>
+            <result property="name" column="manager_name"/>
+            <result property="department" column="manager_department"/>
   </resultMap>
   
     <select id = "getAllEmployees" resultMap = "employeeResultMap">
          	SELECT id , name ,age , role, manager_id FROM employee
         <where>
             <if test="name != null and name != ''">
-                AND title LIKE CONCAT('%', #{name}, '%')
+                AND name LIKE CONCAT('%', #{name}, '%')
             </if>
             <if test="age != null and age != ''">
                 AND age LIKE CONCAT('%', #{age}, '%')
@@ -42,8 +44,14 @@
         </select>
         
  <select id="getAllEmployeesWithManagers" resultMap="EmployeeWithManagerResultMap">
-    SELECT e.id,e.name , e.age, e.role, e.manager_id ,
-           m.id, m.name, m.department
+    SELECT e.id,
+    	   e.name,
+    	   e.age,
+    	   e.role,
+    	   e.manager_id,
+           m.id AS manager_id,
+           m.name AS manager_name,
+           m.department AS manager_department
     FROM employee e
     INNER JOIN manager m ON m.id = e.manager_id
 </select>
@@ -68,14 +76,29 @@
         DELETE FROM employee WHERE id = #{id}
     </delete>
   	
-<select id="getEmployeeById" parameterType="int" resultMap="EmployeeWithManagerResultMap">
-    SELECT e.id , e.name, e.age , e.role, e.manager_id,
-           m.id, m.name, m.department
-    FROM employee e
-    INNER JOIN manager m ON m.id = e.manager_id
-    WHERE e.id = #{id}
-</select>
-  	
+	<select id="getEmployeeById" parameterType="int" resultMap="EmployeeWithManagerResultMap">
+    	SELECT e.id,
+    		e.name,
+    		e.age,
+    		e.role,
+    		e.manager_id,
+           m.id AS manager_id,
+           m.name AS manager_name,
+           m.department AS manager_department
+    	FROM employee e
+    	INNER JOIN manager m ON m.id = e.manager_id
+    	WHERE e.id = #{id}
+	</select>
+
+	<select id = "isEmployeeExist" parameterType = "int" resultType = "Employee">
+		SELECT  e.id , e.name, e.age , e.role FROM employee e 
+		WHERE id = #{employeeId}
+	</select>
+	
+	<select id = "existEmployee" parameterType = "int" resultType = "boolean">
+		 SELECT EXISTS(SELECT 1 FROM employee WHERE id = #{employeeId});
+	</select>
+	
   	<update id = "updateEmployee" parameterType = "Employee">
   	    UPDATE employee 
   	    <set>
@@ -87,6 +110,7 @@
   	    </set>
   	    WHERE id = #{id};
   	</update>
-
+  	
+  </mapper>
     
   </mapper>
